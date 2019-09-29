@@ -9,9 +9,9 @@ class Board:
         self._width = width
         self._cells = []
 
-        for row in range(self._height):
+        for _ in range(self._height):
             new_row = []
-            for col in range(self._width):
+            for _ in range(self._width):
                 new_row.append(0)
             self._cells.append(new_row)
 
@@ -43,7 +43,7 @@ class Board:
     def _top_border(self):
         string = '┌'
 
-        for i in range(self._width - 1):
+        for _ in range(self._width - 1):
             string += ('─' * self.__cell_width) + '┬'
         string += ('─' * self.__cell_width) + '┐\n'
 
@@ -52,7 +52,7 @@ class Board:
     def _middle_border(self):
         string = '├'
 
-        for i in range(self._width - 1):
+        for _ in range(self._width - 1):
             string += ('─' * self.__cell_width) + '┼'
         string += ('─' * self.__cell_width) + '┤\n'
 
@@ -61,7 +61,7 @@ class Board:
     def _bottom_border(self):
         string = '└'
 
-        for i in range(self._width - 1):
+        for _ in range(self._width - 1):
             string += ('─' * self.__cell_width) + '┴'
         string += ('─' * self.__cell_width) + '┘\n'
 
