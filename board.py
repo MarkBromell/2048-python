@@ -38,7 +38,7 @@ class Board:
 
     # region functions for drawing the board
     def _str_cell(self, value):
-        return ('{:^' + self.__cell_width + '}│').format(str(value))
+        return ('{:^5}│').format(str(value))
 
     def _top_border(self):
         string = '┌'

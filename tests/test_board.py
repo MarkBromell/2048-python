@@ -29,7 +29,7 @@ class TestBoard(unittest.TestCase):
     def test_str_cell(self):
         my_board = board.Board(4, 4)
         string = '  0  │'
-        self.assertEquals(my_board._str_cell('0'), string)
+        self.assertEquals(my_board._str_cell(0), string)
 
     def test_top_border(self):
         my_board = board.Board(4, 4)
