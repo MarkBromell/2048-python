@@ -30,3 +30,11 @@ class TestCell(unittest.TestCase):
         cell1 = cell.Cell(4)
         cell2 = cell.Cell(4)
         self.assertTrue(cell1.can_combine(cell2))
+
+    def test_is_empty_true(self):
+        my_cell = cell.Cell()
+        self.assertTrue(my_cell.is_empty())
+
+    def test_is_empty_false(self):
+        my_cell = cell.Cell(2)
+        self.assertFalse(my_cell.is_empty())

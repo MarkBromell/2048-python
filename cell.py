@@ -27,3 +27,6 @@ class Cell:
             return True
         else:
             return False
+
+    def is_empty(self):
+        return self._value == 0
