@@ -38,9 +38,12 @@ class Board:
         return self._width
 
     def add_cell_random(self):
+        # No ned to try add to a board that's full
         if self.is_full():
             return
 
+        # Keep trying to add to the board until you hit an empty cell
+        # (this is inefficient, but it works)
         while True:
             random_row = random.randint(0, self._height - 1)
             random_col = random.randint(0, self._width - 1)
