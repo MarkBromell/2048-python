@@ -1,5 +1,6 @@
 import unittest
 import board
+import cell
 
 
 class TestBoard(unittest.TestCase):
@@ -25,6 +26,20 @@ class TestBoard(unittest.TestCase):
     def test_get_width(self):
         my_board = board.Board(3, 4)
         self.assertEquals(my_board.get_width(), 4)
+
+    def test_add_cell_random(self):
+        my_board = board.Board(4, 4)
+        location = my_board.add_cell_random()
+        self.assertTrue(my_board._cells[location[0]][location[1]] != 0)
+
+    def test_is_full_true(self):
+        my_board = board.Board(4, 4)
+        self.assertFalse(my_board.is_full())
+
+    def test_is_full_false(self):
+        my_board = board.Board(4, 4)
+        my_board._cells[0][0] = cell.Cell(2)
+        self.assertFalse(my_board.is_full())
 
     def test_str_cell(self):
         my_board = board.Board(4, 4)
