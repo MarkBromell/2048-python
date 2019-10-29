@@ -1,5 +1,6 @@
 import cell
 import random
+from enum import Enum
 
 
 class Board:
@@ -44,11 +45,41 @@ class Board:
     def width(self):
         return self._width
 
-    def get_cell(self, x, y):
-        return self._cells[x][y]
+    def get_cell(self, row, col):
+        return self._cells[row][col]
 
-    def set_cell(self, x, y, value):
-        self._cells[x][y].value = value
+    def set_cell(self, row, col, value):
+        self._cells[row][col].value = value
+
+    def move(self, direction):
+        if direction is Move.up:
+            for _ in range(self.height - 1):
+                for row in range(self.height - 1):
+                    for col in range(self.width):
+                        self._check_and_move(row, col, 1, 0)
+        elif direction is Move.down:
+            for _ in range(self.height - 1, 0, -1):
+                for row in range(self.height - 1, 0, -1):
+                    for col in range(self.width):
+                        self._check_and_move(row, col, -1, 0)
+        elif direction is Move.left:
+            for _ in range(self.width - 1):
+                for row in range(self.height):
+                    for col in range(self.width - 1):
+                        self._check_and_move(row, col, 0, 1)
+        elif direction is Move.right:
+            for _ in range(self.width - 1, 0, -1):
+                for row in range(self.height):
+                    for col in range(self.width - 1, 0, -1):
+                        self._check_and_move(row, col, 0, -1)
+
+    def _check_and_move(self, row, col, row_add, col_add):
+        if self._cells[row][col].is_empty() and not self._cells[row + row_add][col + col_add].is_empty():
+            self._cells[row][col] = self._cells[row + row_add][col + col_add]
+            self._cells[row + row_add][col + col_add] = cell.Cell()
+        elif self._cells[row][col].can_combine(self._cells[row + row_add][col + col_add]):
+            self._cells[row][col].increase_value()
+            self._cells[row + row_add][col + col_add] = cell.Cell()
 
     def add_cell_random(self):
         # No ned to try add to a board that's full
@@ -94,3 +125,10 @@ class Board:
             string += ('─' * self.__cell_width) + '┴'
         string += ('─' * self.__cell_width) + '┘\n'
         return string
+
+
+class Move(Enum):
+    up = 1
+    down = 2
+    left = 3
+    right = 4

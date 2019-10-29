@@ -42,10 +42,130 @@ class TestBoard(unittest.TestCase):
         my_board = board.Board(4, 4)
         self.assertEqual(my_board.get_cell(0, 0), cell.Cell(0))
 
-    def test_setitem(self):
+    def test_set_cell(self):
         my_board = board.Board(4, 4)
         my_board.set_cell(0, 0, 2)
         self.assertEqual(my_board.get_cell(0, 0), cell.Cell(2))
+
+    def test_move_up(self):
+        actual = board.Board(4, 4)
+        actual.set_cell(2, 0, 2)
+        actual.move(board.Move.up)
+        expected = board.Board(4, 4)
+        expected.set_cell(0, 0, 2)
+        self.assertEqual(actual, expected)
+
+    def test_move_up_with_combines(self):
+        actual = board.Board(4, 4)
+        actual.set_cell(0, 0, 2)
+        actual.set_cell(1, 0, 2)
+        actual.set_cell(2, 0, 2)
+        actual.set_cell(3, 0, 2)
+        actual.move(board.Move.up)
+        expected = board.Board(4, 4)
+        expected.set_cell(0, 0, 8)
+        self.assertEqual(actual, expected)
+
+    def test_move_up_with_combines_2(self):
+        actual = board.Board(4, 4)
+        actual.set_cell(0, 0, 2)
+        actual.set_cell(1, 0, 2)
+        actual.set_cell(2, 0, 2)
+        actual.move(board.Move.up)
+        expected = board.Board(4, 4)
+        expected.set_cell(0, 0, 4)
+        expected.set_cell(1, 0, 2)
+        self.assertEqual(actual, expected)
+        
+    def test_move_down(self):
+        actual = board.Board(4, 4)
+        actual.set_cell(1, 0, 2)
+        actual.move(board.Move.down)
+        expected = board.Board(4, 4)
+        expected.set_cell(3, 0, 2)
+        self.assertEqual(actual, expected)
+
+    def test_move_down_with_combines(self):
+        actual = board.Board(4, 4)
+        actual.set_cell(0, 0, 2)
+        actual.set_cell(1, 0, 2)
+        actual.set_cell(2, 0, 2)
+        actual.set_cell(3, 0, 2)
+        actual.move(board.Move.down)
+        expected = board.Board(4, 4)
+        expected.set_cell(3, 0, 8)
+        self.assertEqual(actual, expected)
+
+    def test_move_down_with_combines_2(self):
+        actual = board.Board(4, 4)
+        actual.set_cell(1, 0, 2)
+        actual.set_cell(2, 0, 2)
+        actual.set_cell(3, 0, 2)
+        actual.move(board.Move.down)
+        expected = board.Board(4, 4)
+        expected.set_cell(2, 0, 2)
+        expected.set_cell(3, 0, 4)
+        self.assertEqual(actual, expected)
+        
+    def test_move_left(self):
+        actual = board.Board(4, 4)
+        actual.set_cell(0, 2, 2)
+        actual.move(board.Move.left)
+        expected = board.Board(4, 4)
+        expected.set_cell(0, 0, 2)
+        self.assertEqual(actual, expected)
+
+    def test_move_left_with_combines(self):
+        actual = board.Board(4, 4)
+        actual.set_cell(0, 0, 2)
+        actual.set_cell(0, 1, 2)
+        actual.set_cell(0, 2, 2)
+        actual.set_cell(0, 3, 2)
+        actual.move(board.Move.left)
+        expected = board.Board(4, 4)
+        expected.set_cell(0, 0, 8)
+        self.assertEqual(actual, expected)
+
+    def test_move_left_with_combines_2(self):
+        actual = board.Board(4, 4)
+        actual.set_cell(0, 0, 2)
+        actual.set_cell(0, 1, 2)
+        actual.set_cell(0, 2, 2)
+        actual.move(board.Move.left)
+        expected = board.Board(4, 4)
+        expected.set_cell(0, 0, 4)
+        expected.set_cell(0, 1, 2)
+        self.assertEqual(actual, expected)
+    
+    def test_move_right(self):
+        actual = board.Board(4, 4)
+        actual.set_cell(0, 1, 2)
+        actual.move(board.Move.right)
+        expected = board.Board(4, 4)
+        expected.set_cell(0, 3, 2)
+        self.assertEqual(actual, expected)
+
+    def test_move_right_with_combines(self):
+        actual = board.Board(4, 4)
+        actual.set_cell(0, 0, 2)
+        actual.set_cell(0, 1, 2)
+        actual.set_cell(0, 2, 2)
+        actual.set_cell(0, 3, 2)
+        actual.move(board.Move.right)
+        expected = board.Board(4, 4)
+        expected.set_cell(0, 3, 8)
+        self.assertEqual(actual, expected)
+
+    def test_move_right_with_combines_2(self):
+        actual = board.Board(4, 4)
+        actual.set_cell(0, 1, 2)
+        actual.set_cell(0, 2, 2)
+        actual.set_cell(0, 3, 2)
+        actual.move(board.Move.right)
+        expected = board.Board(4, 4)
+        expected.set_cell(0, 3, 4)
+        expected.set_cell(0, 2, 2)
+        self.assertEqual(actual, expected)
 
     def test_add_cell_random(self):
         my_board = board.Board(4, 4)

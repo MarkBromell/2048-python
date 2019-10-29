@@ -23,7 +23,7 @@ class Cell:
         self._value *= 2
 
     def can_combine(self, other):
-        if self._value == other.value:
+        if self._value == other.value and self._value != 0:
             return True
         else:
             return False
