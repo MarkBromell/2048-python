@@ -52,7 +52,7 @@ class Board:
                 new_cell = cell.Cell()
                 new_cell.initialize_value()
                 self._cells[random_row][random_col] = new_cell
-                return (random_row, random_col)
+                return random_row, random_col
 
     def is_full(self):
         for row in range(self._height):
@@ -63,7 +63,7 @@ class Board:
 
     # region functions for drawing the board
     def _str_cell(self, value):
-        return ('{:^5}│').format(str(value))
+        return '{:^5}│'.format(str(value))
 
     def _top_border(self):
         string = '┌'
