@@ -47,6 +47,11 @@ class TestBoard(unittest.TestCase):
         my_board.set_cell(0, 0, 2)
         self.assertEqual(my_board.get_cell(0, 0), cell.Cell(2))
 
+    def test_move_and_generate(self):
+        my_board = board.Board(4, 4)
+        my_board.initialize_board()
+        self.assertFalse(my_board.is_empty())
+
     def test_move_up(self):
         actual = board.Board(4, 4)
         actual.set_cell(2, 0, 2)
@@ -172,14 +177,29 @@ class TestBoard(unittest.TestCase):
         location = my_board.add_cell_random()
         self.assertTrue(my_board.get_cell(location[0], location[1]).value != 0)
 
-    def test_is_full_true(self):
+    def test_initialize_board(self):
         my_board = board.Board(4, 4)
-        self.assertFalse(my_board.is_full())
+        my_board.initialize_board()
+        self.assertFalse(my_board.is_empty())
+
+    def test_is_full_true(self):
+        my_board = board.Board(1, 1)
+        my_board._cells[0][0] = cell.Cell(2)
+        self.assertTrue(my_board.is_full())
 
     def test_is_full_false(self):
         my_board = board.Board(4, 4)
         my_board._cells[0][0] = cell.Cell(2)
         self.assertFalse(my_board.is_full())
+
+    def test_is_empty_true(self):
+        my_board = board.Board(4, 4)
+        self.assertTrue(my_board.is_empty())
+
+    def test_is_empty_false(self):
+        my_board = board.Board(4, 4)
+        my_board._cells[0][0] = cell.Cell(2)
+        self.assertFalse(my_board.is_empty())
 
     def test_str_cell(self):
         my_board = board.Board(4, 4)

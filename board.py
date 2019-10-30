@@ -51,35 +51,50 @@ class Board:
     def set_cell(self, row, col, value):
         self._cells[row][col].value = value
 
+    def move_and_generate(self, direction):
+        self.move(direction)
+        self.add_cell_random()
+
     def move(self, direction):
         if direction is Move.up:
-            for _ in range(self.height - 1):
-                for row in range(self.height - 1):
-                    for col in range(self.width):
-                        self._check_and_move(row, col, 1, 0)
+            self._check_and_move(
+                range(self.height - 1),
+                range(self.height - 1),
+                range(self.width),
+                1,
+                0)
         elif direction is Move.down:
-            for _ in range(self.height - 1, 0, -1):
-                for row in range(self.height - 1, 0, -1):
-                    for col in range(self.width):
-                        self._check_and_move(row, col, -1, 0)
+            self._check_and_move(
+                range(self.height - 1, 0, -1),
+                range(self.height - 1, 0, -1),
+                range(self.width),
+                -1,
+                0)
         elif direction is Move.left:
-            for _ in range(self.width - 1):
-                for row in range(self.height):
-                    for col in range(self.width - 1):
-                        self._check_and_move(row, col, 0, 1)
+            self._check_and_move(
+                range(self.width - 1),
+                range(self.height),
+                range(self.width - 1),
+                0,
+                1)
         elif direction is Move.right:
-            for _ in range(self.width - 1, 0, -1):
-                for row in range(self.height):
-                    for col in range(self.width - 1, 0, -1):
-                        self._check_and_move(row, col, 0, -1)
+            self._check_and_move(
+                range(self.width - 1, 0, -1),
+                range(self.height),
+                range(self.width - 1, 0, -1),
+                0,
+                -1)
 
-    def _check_and_move(self, row, col, row_add, col_add):
-        if self._cells[row][col].is_empty() and not self._cells[row + row_add][col + col_add].is_empty():
-            self._cells[row][col] = self._cells[row + row_add][col + col_add]
-            self._cells[row + row_add][col + col_add] = cell.Cell()
-        elif self._cells[row][col].can_combine(self._cells[row + row_add][col + col_add]):
-            self._cells[row][col].increase_value()
-            self._cells[row + row_add][col + col_add] = cell.Cell()
+    def _check_and_move(self, iter_range, row_range, col_range, row_add, col_add):
+        for _ in iter_range:
+            for row in row_range:
+                for col in col_range:
+                    if self._cells[row][col].is_empty() and not self._cells[row + row_add][col + col_add].is_empty():
+                        self._cells[row][col] = self._cells[row + row_add][col + col_add]
+                        self._cells[row + row_add][col + col_add] = cell.Cell()
+                    elif self._cells[row][col].can_combine(self._cells[row + row_add][col + col_add]):
+                        self._cells[row][col].increase_value()
+                        self._cells[row + row_add][col + col_add] = cell.Cell()
 
     def add_cell_random(self):
         # No ned to try add to a board that's full
@@ -94,10 +109,21 @@ class Board:
                 self.set_cell(x, y, cell.starting_value())
                 return x, y
 
+    def initialize_board(self):
+        for _ in range(2):
+            self.add_cell_random()
+
     def is_full(self):
         for row in range(self._height):
             for col in range(self._width):
                 if self._cells[row][col].is_empty():
+                    return False
+        return True
+
+    def is_empty(self):
+        for row in range(self._height):
+            for col in range(self._width):
+                if not self._cells[row][col].is_empty():
                     return False
         return True
 
